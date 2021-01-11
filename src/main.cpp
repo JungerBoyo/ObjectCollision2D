@@ -5,7 +5,7 @@
 
 float TransformForward(Shape& shape, vec2& a) //a1/a2
 {  
-    float y = sqrt(10/((a.Y * a.Y)/(a.X * a.X)+1));
+    float y = sqrt(16/((a.Y * a.Y)/(a.X * a.X)+1));
     float x = (a.Y*y)/a.X;
 
     vec2 diff = shape.data.Points[0] - shape.data.center;
@@ -13,8 +13,11 @@ float TransformForward(Shape& shape, vec2& a) //a1/a2
     y = (diff.Y > 0) ? y : -y;
     x = (diff.X > 0) ? x : -x; 
 
-    y = (a.X/a.Y > 0) ? y : -y;
-    x = (a.X/a.Y > 0) ? x : -x;
+    if(a.X/a.Y < 0)
+    {
+        //y *= -1;
+        x *= -1;
+    }
 
     std::cout << diff.X << " " << diff.Y << "\n";
     std::cout << x << " " << y << "\n";
