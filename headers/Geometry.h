@@ -17,6 +17,21 @@ struct vec2
     float Y;
 };
 
+struct rotmat2x2
+{
+    rotmat2x2(float ang)
+    {
+        angle = ang;
+        mat[0] = cos(ang);
+        mat[1] = sin(ang);
+        mat[2] =-sin(ang);
+        mat[3] = cos(ang);
+    }
+
+    float angle;
+    float mat[4];
+};
+
 struct polygon 
 {
     std::vector<vec2> OriginPoints;

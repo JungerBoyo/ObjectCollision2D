@@ -3,20 +3,24 @@
 #include <vector>
 #include <iostream>
 
-void TransformForward(Shape& shape)
+float TransformForward(Shape& shape, float& a)
 {
-    float a = (shape.data.center.Y - shape.data.Points[0].Y) / (shape.data.center.X - shape.data.Points[0].X);
-    float b;
+    
+    
+    return a;
+}
 
-    b = shape.data.center.Y - a*shape.data.center.X;
-    shape.data.center = vec2((shape.data.center.Y+2.0f - b)*a,a*(shape.data.center.X+2.0f) + b);
-
+float Rot(Shape& shape, const rotmat2x2& mat2)
+{
     for(int i=0; i<shape.data.Points.size(); i++)
     {
-        b = shape.data.Points[i].Y - a*shape.data.Points[i].X;
-        shape.data.Points[i] = vec2((shape.data.Points[i].Y+2.0f - b)*a,a*(shape.data.Points[i].X+2.0f) + b);
+        shape.data.Points[i] = vec2((mat2.mat[0] * (shape.data.Points[i].X-shape.data.center.X) + mat2.mat[1] *  (shape.data.Points[i].Y-shape.data.center.Y)) + shape.data.center.X ,
+                                    (mat2.mat[2] * (shape.data.Points[i].X-shape.data.center.X) + mat2.mat[3] *  (shape.data.Points[i].Y-shape.data.center.Y)) + shape.data.center.Y);
     }
+
+    return (shape.data.center.Y - shape.data.Points[0].Y) / (shape.data.center.X - shape.data.Points[0].X);
 }
+
 
 int main()
 {
@@ -27,7 +31,7 @@ int main()
     X11WindowManager* X11panel = new X11WindowManager(true);
     
     Shape* Triangle = new Shape(PENTAGON, vec2(250.0f, 250.0f), 50.0f); 
-
+    float a = 1;
     X11panel -> DrawPolygon(*Triangle, "gray0");
 
     while(true)
@@ -46,9 +50,9 @@ int main()
 
            switch(text[0])
            {
-               case 'w': TransformForward(*Triangle); break;
-               case 'e': //RotRight(Triangle); break;
-               case 'q': //RotLeft(Triangle); break;
+               case 'w': std::cout << TransformForward(*Triangle, a) << "\n"; break;
+               case 'e': a = Rot(*Triangle, rotmat2x2(pi/90)); break;
+               case 'q': a = Rot(*Triangle, rotmat2x2(pi/-90)); break;
                default: break;
            }
 
