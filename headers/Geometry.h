@@ -47,6 +47,23 @@ inline vec2 operator+(vec2 const& v1, vec2 const& v2)
     return vec2(v1.X+v2.X, v1.Y+v2.Y);
 }
 
+inline void operator+=(vec2& v1, vec2 const& v2)
+{
+    v1 = v1 + v2;
+}
+
+inline vec2 operator-(vec2 const& v1, vec2 const& v2)
+{
+    return vec2(v1.X-v2.X, v1.Y-v2.Y);
+}
+
+inline void operator-=(vec2& v1, vec2 const& v2)
+{
+    v1 = v1 - v2;
+}
+
+
+
 enum polygonType
 {
     TRIANGLE,
