@@ -36,6 +36,7 @@ struct polygon
 {
     std::vector<vec2> OriginPoints;
     std::vector<vec2> Points;
+    int Count;
     vec2 center;
     float angle;
     float scale;
@@ -62,28 +63,25 @@ inline void operator-=(vec2& v1, vec2 const& v2)
     v1 = v1 - v2;
 }
 
-
-
 enum polygonType
 {
-    TRIANGLE,
-    RECTANGLE,
-    PENTAGON
+    TRIANGLE = 3,
+    RECTANGLE = 4,
+    PENTAGON = 5,
+    NONAGON = 9,
+    RANDOM
 };
 
 class Shape
 {
     public:
         Shape(const polygonType type, vec2 centerPoint, float scale);
-
         polygon data;
 
-        
- 
     private:
-        void CreateTriangle(vec2 centerPoint, float scale);
-        void CreateRectangle(vec2 centerPoint, float scale);
-        void CreatePentagon(vec2 centerPoint, float scale);
+        void CreatePolygon(polygonType type, vec2 centerPoint, float scale);
+        void CreateRandomPolygon(polygonType type, vec2 centerPoint, float scale);
+
 };
 
 #endif
